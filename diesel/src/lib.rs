@@ -732,6 +732,8 @@ pub mod prelude {
     };
     #[doc(inline)]
     pub use diesel_derives::table_proc as table;
+    #[doc(inline)]
+    pub use diesel_derives::view_proc as view;
 
     #[cfg(feature = "mysql")]
     #[doc(inline)]
@@ -749,6 +751,8 @@ pub mod prelude {
 
 #[doc(inline)]
 pub use crate::macros::table;
+#[doc(inline)]
+pub use crate::macros::view;
 pub use crate::prelude::*;
 #[doc(inline)]
 pub use crate::query_builder::debug_query;
