@@ -1,4 +1,4 @@
-use proc_macro2::TokenStream;
+use proc_macro2::{TokenStream, Span};
 use quote::{quote, quote_spanned};
 use syn::spanned::Spanned as _;
 use syn::{parse_quote, DeriveInput, Expr, Path, Result, Type};
@@ -172,7 +172,7 @@ pub fn derive(item: DeriveInput) -> Result<TokenStream> {
 
 fn field_changeset_ty_embed(field: &Field, lifetime: Option<TokenStream>) -> TokenStream {
     let field_ty = &field.ty;
-    let span = field.span;
+    let span = Span::mixed_site().located_at(field.span);
     quote_spanned!(span=> #lifetime #field_ty)
 }
 

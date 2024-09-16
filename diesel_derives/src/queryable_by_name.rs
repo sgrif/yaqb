@@ -1,4 +1,4 @@
-use proc_macro2::TokenStream;
+use proc_macro2::{TokenStream, Span};
 use quote::quote;
 use syn::{parse_quote, parse_quote_spanned, DeriveInput, Ident, LitStr, Result, Type};
 
@@ -45,7 +45,7 @@ pub fn derive(item: DeriveInput) -> Result<TokenStream> {
 
     for field in model.fields() {
         let where_clause = generics.where_clause.get_or_insert(parse_quote!(where));
-        let span = field.span;
+        let span = Span::mixed_site().located_at(field.span);
         let field_ty = field.ty_for_deserialize();
         if field.embed() {
             where_clause
