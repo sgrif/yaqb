@@ -45,7 +45,7 @@ pub fn derive(item: DeriveInput) -> Result<TokenStream> {
 
     for field in model.fields() {
         let where_clause = generics.where_clause.get_or_insert(parse_quote!(where));
-         let span = Span::mixed_site().located_at(field.span);
+        let span = Span::mixed_site().located_at(field.span);
         let field_ty = field.ty_for_deserialize();
         if field.embed() {
             where_clause
