@@ -93,6 +93,8 @@ where
 }
 
 pub fn wrap_in_dummy_mod(item: TokenStream) -> TokenStream {
+    // allow(unused_qualifications) is here as it hard to unsure the span is correctly set. Should stay until it is
+    // checked by CI. See https://github.com/rust-lang/rust/issues/130277 for more details.
     quote! {
         #[allow(unused_imports)]
         const _: () = {
