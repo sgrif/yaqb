@@ -197,7 +197,7 @@ fn field_ty_serialize_as(
     treat_none_as_default_value: bool,
 ) -> Result<TokenStream> {
     let column_name = field.column_name()?.to_ident()?;
-    let span = field.span;
+    let span = Span::mixed_site().located_at(field.span);
     if treat_none_as_default_value {
         let inner_ty = inner_of_option_ty(ty);
 
