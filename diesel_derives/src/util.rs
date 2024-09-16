@@ -97,8 +97,8 @@ pub fn wrap_in_dummy_mod(item: TokenStream) -> TokenStream {
     // checked by CI. See https://github.com/rust-lang/rust/issues/130277 for more details.
     quote! {
         #[allow(unused_imports)]
+        #[allow(unused_qualifications)]
         const _: () = {
-            #[allow(unused_qualifications)]
             // This import is not actually redundant. When using diesel_derives
             // inside of diesel, `diesel` doesn't exist as an extern crate, and
             // to work around that it contains a private
