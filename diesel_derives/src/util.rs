@@ -96,6 +96,7 @@ pub fn wrap_in_dummy_mod(item: TokenStream) -> TokenStream {
     quote! {
         #[allow(unused_imports)]
         const _: () = {
+            #[allow(unused_qualifications)]
             // This import is not actually redundant. When using diesel_derives
             // inside of diesel, `diesel` doesn't exist as an extern crate, and
             // to work around that it contains a private
