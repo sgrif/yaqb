@@ -1,4 +1,4 @@
-use proc_macro2::{TokenStream, Span};
+use proc_macro2::{Span, TokenStream};
 use quote::{quote, quote_spanned};
 use syn::spanned::Spanned as _;
 use syn::{parse_quote, DeriveInput, Expr, Path, Result, Type};
