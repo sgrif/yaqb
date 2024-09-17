@@ -118,7 +118,7 @@ fn derive_into_single_table(
                     treat_none_as_default_value,
                 )?);
 
-                generate_borrowed_insert = false; // as soon as we hit one field with #[diesel(serialize_as)] there is no point in generating the impl of Insertable for borrowed structs   
+                generate_borrowed_insert = false; // as soon as we hit one field with #[diesel(serialize_as)] there is no point in generating the impl of Insertable for borrowed structs
             }
             (Some(AttributeSpanWrapper { attribute_span, .. }), true) => {
                 return Err(syn::Error::new(
