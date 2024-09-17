@@ -1,14 +1,13 @@
-use {
-    crate::{
-        attrs::AttributeSpanWrapper,
-        field::Field,
-        model::Model,
-        util::{inner_of_option_ty, is_option_ty, wrap_in_dummy_mod},
-    },
-    proc_macro2::{Span, TokenStream},
-    quote::{quote, quote_spanned},
-    syn::{parse_quote, spanned::Spanned as _, DeriveInput, Expr, Path, Result, Type},
-};
+use crate::attrs::AttributeSpanWrapper;
+use crate::field::Field;
+use crate::model::Model;
+use crate::util::{inner_of_option_ty, is_option_ty, wrap_in_dummy_mod};
+use proc_macro2::{Span,TokenStream};
+use quote::quote;
+use quote::quote_spanned;
+use syn::parse_quote;
+use syn::spanned::Spanned as _;
+use syn::{DeriveInput, Expr, Path, Result, Type};
 
 pub fn derive(item: DeriveInput) -> Result<TokenStream> {
     let model = Model::from_item(&item, false, true)?;
@@ -119,10 +118,7 @@ fn derive_into_single_table(
                     treat_none_as_default_value,
                 )?);
 
-                generate_borrowed_insert = false; // as soon as we hit one field with
-                                                  // #[diesel(serialize_as)] there is no point in
-                                                  // generating the impl of Insertable for borrowed
-                                                  // structs
+                generate_borrowed_insert = false; // as soon as we hit one field with #[diesel(serialize_as)] there is no point in generating the impl of Insertable for borrowed structs   
             }
             (Some(AttributeSpanWrapper { attribute_span, .. }), true) => {
                 return Err(syn::Error::new(
