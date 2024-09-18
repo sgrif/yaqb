@@ -1,5 +1,5 @@
 use diesel_table_macro_syntax::{ColumnDef, TableDecl};
-use proc_macro2::TokenStream;
+use proc_macro2::{Span, TokenStream};
 use syn::parse_quote;
 use syn::Ident;
 
@@ -76,7 +76,7 @@ pub(crate) fn expand(input: TableDecl) -> TokenStream {
             }
             message += "\t}\n}";
 
-            let span = input.table_name.span();
+            let span = Span::mixed_site().located_at(input.table_name.span());
             return quote::quote_spanned! {span=>
                 compile_error!(#message);
             };
@@ -129,7 +129,7 @@ pub(crate) fn expand(input: TableDecl) -> TokenStream {
     let reexport_column_from_dsl = input.column_defs.iter().map(|c| {
         let column_name = &c.column_name;
         if c.column_name == *table_name {
-            let span = c.column_name.span();
+            let span = Span::mixed_site().located_at(c.column_name.span());
             let message = format!(
                 "Column `{column_name}` cannot be named the same as it's table.\n\
                  You may use `#[sql_name = \"{column_name}\"]` to reference the table's \
@@ -684,7 +684,7 @@ fn generate_op_impl(op: &str, tpe: &syn::Ident) -> TokenStream {
 fn expand_column_def(column_def: &ColumnDef) -> TokenStream {
     // TODO get a better span here as soon as that's
     // possible using stable rust
-    let span = column_def.column_name.span();
+    let span = Span::mixed_site().located_at(column_def.column_name.span());
     let meta = &column_def.meta;
     let column_name = &column_def.column_name;
     let sql_name = &column_def.sql_name;

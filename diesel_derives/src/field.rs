@@ -1,6 +1,7 @@
-use proc_macro2::{Span, TokenStream};
-use syn::spanned::Spanned;
-use syn::{Expr, Field as SynField, Ident, Index, Result, Type};
+use {
+    proc_macro2::{Span, TokenStream},
+    syn::{spanned::Spanned, Expr, Field as SynField, Ident, Index, Result, Type},
+};
 
 use crate::attrs::{parse_attributes, AttributeSpanWrapper, FieldAttr, SqlIdentifier};
 
@@ -119,10 +120,10 @@ impl Field {
             None => FieldName::Unnamed(index.into()),
         };
 
-        let span = match name {
+        let span = Span::mixed_site().located_at(match name {
             FieldName::Named(ref ident) => ident.span(),
             FieldName::Unnamed(_) => ty.span(),
-        };
+        });
 
         Ok(Self {
             ty: ty.clone(),
