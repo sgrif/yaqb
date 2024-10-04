@@ -155,12 +155,12 @@ pub fn ty_for_foreign_derive(item: &DeriveInput, model: &Model) -> Result<Type> 
             Data::Struct(ref body) => match body.fields.iter().next() {
                 Some(field) => Ok(field.ty.clone()),
                 None => Err(syn::Error::new(
-                    proc_macro2::Span::call_site(),
+                    proc_macro2::Span::mixed_site(),
                     "foreign_derive requires at least one field",
                 )),
             },
             _ => Err(syn::Error::new(
-                proc_macro2::Span::call_site(),
+                proc_macro2::Span::mixed_site(),
                 "foreign_derive can only be used with structs",
             )),
         }

@@ -46,10 +46,10 @@ pub(crate) fn expand(input: TableDecl) -> TokenStream {
     let primary_key: TokenStream = match input.primary_keys.as_ref() {
         None if column_names.contains(&&syn::Ident::new(
             DEFAULT_PRIMARY_KEY_NAME,
-            proc_macro2::Span::call_site(),
+            proc_macro2::Span::mixed_site(),
         )) =>
         {
-            let id = syn::Ident::new(DEFAULT_PRIMARY_KEY_NAME, proc_macro2::Span::call_site());
+            let id = syn::Ident::new(DEFAULT_PRIMARY_KEY_NAME, proc_macro2::Span::mixed_site());
             parse_quote! {
                 #id
             }
@@ -527,15 +527,15 @@ fn generate_valid_grouping_for_table_columns(table: &TableDecl) -> Vec<TokenStre
     for (id, right_col) in table.column_defs.iter().enumerate() {
         for left_col in table.column_defs.iter().skip(id) {
             let right_to_left = if Some(left_col.column_name.to_string()) == primary_key {
-                Ident::new("Yes", proc_macro2::Span::call_site())
+                Ident::new("Yes", proc_macro2::Span::mixed_site())
             } else {
-                Ident::new("No", proc_macro2::Span::call_site())
+                Ident::new("No", proc_macro2::Span::mixed_site())
             };
 
             let left_to_right = if Some(right_col.column_name.to_string()) == primary_key {
-                Ident::new("Yes", proc_macro2::Span::call_site())
+                Ident::new("Yes", proc_macro2::Span::mixed_site())
             } else {
-                Ident::new("No", proc_macro2::Span::call_site())
+                Ident::new("No", proc_macro2::Span::mixed_site())
             };
 
             let left_col = &left_col.column_name;

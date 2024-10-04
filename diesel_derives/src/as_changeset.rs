@@ -1,12 +1,15 @@
-use proc_macro2::{Span, TokenStream};
-use quote::{quote, quote_spanned};
-use syn::spanned::Spanned as _;
-use syn::{parse_quote, DeriveInput, Expr, Path, Result, Type};
+use {
+    proc_macro2::{Span, TokenStream},
+    quote::{quote, quote_spanned},
+    syn::{parse_quote, spanned::Spanned as _, DeriveInput, Expr, Path, Result, Type},
+};
 
-use crate::attrs::AttributeSpanWrapper;
-use crate::field::Field;
-use crate::model::Model;
-use crate::util::{inner_of_option_ty, is_option_ty, wrap_in_dummy_mod};
+use crate::{
+    attrs::AttributeSpanWrapper,
+    field::Field,
+    model::Model,
+    util::{inner_of_option_ty, is_option_ty, wrap_in_dummy_mod},
+};
 
 pub fn derive(item: DeriveInput) -> Result<TokenStream> {
     let model = Model::from_item(&item, false, false)?;
@@ -27,7 +30,7 @@ pub fn derive(item: DeriveInput) -> Result<TokenStream> {
 
     if fields_for_update.is_empty() {
         return Err(syn::Error::new(
-            proc_macro2::Span::call_site(),
+            proc_macro2::Span::mixed_site(),
             "Deriving `AsChangeset` on a structure that only contains primary keys isn't supported.\n\
              help: If you want to change the primary key of a row, you should do so with `.set(table::id.eq(new_id))`.\n\
              note: `#[derive(AsChangeset)]` never changes the primary key of a row."
@@ -83,7 +86,10 @@ pub fn derive(item: DeriveInput) -> Result<TokenStream> {
                     treat_none_as_null,
                 )?);
 
-                generate_borrowed_changeset = false; // as soon as we hit one field with #[diesel(serialize_as)] there is no point in generating the impl of AsChangeset for borrowed structs
+                generate_borrowed_changeset = false; // as soon as we hit one field with
+                                                     // #[diesel(serialize_as)] there is no point in
+                                                     // generating the impl of AsChangeset for
+                                                     // borrowed structs
             }
             (Some(AttributeSpanWrapper { attribute_span, .. }), true) => {
                 return Err(syn::Error::new(
