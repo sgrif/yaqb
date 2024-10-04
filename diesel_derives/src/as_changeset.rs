@@ -1,14 +1,12 @@
-use {
-    proc_macro2::{Span, TokenStream},
-    quote::{quote, quote_spanned},
-    syn::{parse_quote, spanned::Spanned as _, DeriveInput, Expr, Path, Result, Type},
-};
+use proc_macro2::{Span, TokenStream};
+use quote::{quote, quote_spanned};
+use syn::spanned::Spanned as _;
+use syn::{parse_quote, DeriveInput, Expr, Path, Result, Type};
 
-use crate::{
-    attrs::AttributeSpanWrapper,
-    field::Field,
-    model::Model,
-    util::{inner_of_option_ty, is_option_ty, wrap_in_dummy_mod},
+use crate::attrs::AttributeSpanWrapper;
+use crate::field::Field;
+use crate::model::Model;
+use crate::util::{inner_of_option_ty, is_option_ty, wrap_in_dummy_mod};
 };
 
 pub fn derive(item: DeriveInput) -> Result<TokenStream> {
@@ -86,10 +84,7 @@ pub fn derive(item: DeriveInput) -> Result<TokenStream> {
                     treat_none_as_null,
                 )?);
 
-                generate_borrowed_changeset = false; // as soon as we hit one field with
-                                                     // #[diesel(serialize_as)] there is no point in
-                                                     // generating the impl of AsChangeset for
-                                                     // borrowed structs
+                generate_borrowed_changeset = false; // as soon as we hit one field with #[diesel(serialize_as)] there is no point in generating the impl of AsChangeset for borrowed structs
             }
             (Some(AttributeSpanWrapper { attribute_span, .. }), true) => {
                 return Err(syn::Error::new(

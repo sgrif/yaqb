@@ -1,7 +1,6 @@
-use {
-    proc_macro2::{Span, TokenStream},
-    syn::{spanned::Spanned, Expr, Field as SynField, Ident, Index, Result, Type},
-};
+use proc_macro2::{Span, TokenStream};
+use syn::spanned::Spanned;
+use syn::{Expr, Field as SynField, Ident, Index, Result, Type};
 
 use crate::attrs::{parse_attributes, AttributeSpanWrapper, FieldAttr, SqlIdentifier};
 
