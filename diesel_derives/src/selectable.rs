@@ -1,4 +1,4 @@
-use proc_macro2::{Span TokenStream};
+use proc_macro2::{Span, TokenStream};
 use quote::quote;
 use syn::spanned::Spanned;
 use syn::DeriveInput;
@@ -7,7 +7,6 @@ use syn::{parse_quote, Result};
 use crate::field::Field;
 use crate::model::Model;
 use crate::util::wrap_in_dummy_mod;
-use crate::{field::Field, model::Model, util::wrap_in_dummy_mod};
 
 pub fn derive(item: DeriveInput) -> Result<TokenStream> {
     let model = Model::from_item(&item, false, false)?;
