@@ -10,6 +10,7 @@ mod integers;
 mod ipnet_address;
 #[cfg(feature = "serde_json")]
 mod json;
+mod json_path;
 mod mac_addr;
 mod mac_addr_8;
 #[doc(hidden)]
@@ -644,6 +645,12 @@ pub mod sql_types {
     #[derive(Debug, Clone, Copy, Default, QueryId, SqlType)]
     #[diesel(postgres_type(name = "citext"))]
     pub struct Citext;
+
+    /// The [`Jsonpath`] SQL type. This is a PostgreSQL specific type.
+    #[cfg(feature = "postgres_backend")]
+    #[derive(Debug, Clone, Copy, Default, QueryId, SqlType)]
+    #[diesel(postgres_type(oid = 4072, array_oid = 4073))]
+    pub struct Jsonpath;
 }
 
 mod ops {
