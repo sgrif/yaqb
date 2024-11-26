@@ -16,12 +16,23 @@ Increasing the minimal supported Rust version will always be coupled at least wi
 * Fixed `#[derive(Identifiable)]` ignoring attribute `#[diesel(serialize_as)]` on primary keys
 * Added embedded struct support for `AsChangeset` via `#[diesel(embed)]`
 * Support for libsqlite3-sys 0.30.0
-* Add support for built-in PostgreSQL range operators and functions
+* Added support for built-in PostgreSQL range operators and functions
+* Added support for various built-in PostgreSQL array functions
 * Support for postgres multirange type
 * Added `diesel::r2d2::TestCustomizer`, which allows users to customize their `diesel::r2d2::Pool`s
 in a way that makes the pools suitable for use in parallel tests.
 * Added `Json` and `Jsonb` support for the SQLite backend.
+* Added a `#[diesel::declare_sql_function]` attribute macro to easily define support for 
+  multiple sql functions at once via an `extern "SQL"` block
+
+### Fixed 
+
 * Fixed diesel thinking `a.eq_any(b)` was non-nullable even if `a` and `b` were nullable.
+
+### Deprecated
+
+* The `diesel::define_sql_function!` is now deprecated in favour of the `#[diesel::declare_sql_function]` 
+  attribute macro.
 
 ## [2.2.2] 2024-07-19
 
