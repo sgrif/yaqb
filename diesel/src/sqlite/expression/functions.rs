@@ -425,7 +425,7 @@ define_sql_function! {
 
 #[cfg(feature = "sqlite")]
 define_sql_function! {
-    /// Converts the given json value to pretty-printed, indented text
+    /// Returns 1 if the argument is well-formed JSON, or returns 0 if is not well-formed.
     ///
     /// # Example
     ///
