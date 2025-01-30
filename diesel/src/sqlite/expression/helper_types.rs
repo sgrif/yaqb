@@ -1,5 +1,6 @@
 use crate::dsl::{AsExpr, SqlTypeOf};
 use crate::expression::grouped::Grouped;
+use crate::sql_types::Integer;
 
 /// The return type of `lhs.is(rhs)`.
 pub type Is<Lhs, Rhs> = Grouped<super::operators::Is<Lhs, AsExpr<Rhs, Lhs>>>;
@@ -27,3 +28,8 @@ pub type json_pretty<E> = super::functions::json_pretty<SqlTypeOf<E>, E>;
 #[cfg(feature = "sqlite")]
 pub type json_pretty_with_indentation<J, I> =
     super::functions::json_pretty_with_indentation<SqlTypeOf<J>, J, I>;
+
+/// Return type of [`json_valid(json)`](super::functions::json_valid())
+#[allow(non_camel_case_types)]
+#[cfg(feature = "sqlite")]
+pub type json_valid<E> = super::functions::json_valid<SqlTypeOf<E>, Integer>;
