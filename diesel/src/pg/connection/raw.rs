@@ -1,5 +1,5 @@
 #![allow(clippy::too_many_arguments)]
-#![allow(unsafe_code)] // ffi code
+#![allow(unsafe_code)] // ffi Code
 
 extern crate pq_sys;
 
